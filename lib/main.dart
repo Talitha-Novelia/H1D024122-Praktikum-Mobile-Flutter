@@ -10,9 +10,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: "Aplikasi Flutter Pertama",
-      home: ProdukPage(),
+      theme: ThemeData(
+        useMaterial3: false,
+        primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+        ),
+      ),
+      home: const ProdukPage(),
     );
   }
 }
