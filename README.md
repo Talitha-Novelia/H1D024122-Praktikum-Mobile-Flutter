@@ -25,3 +25,11 @@ Pertemuan ini berfokus pada persiapan lingkungan pengembangan (*environment setu
 3. **List Data Produk:** Mengimplementasikan widget dinamis `StatefulWidget` pada `ui/produk_page.dart` yang memanfaatkan widget `ListView` untuk menampilkan daftar data produk yang dapat digulir (*scrollable*), dibungkus menggunakan komponen `Card` dan `ListTile` untuk memisahkan setiap item produk (*Kulkas*, *Playstation*, *Radio*) beserta harganya secara terstruktur dan rapi.
 
 **Kesimpulan Pertemuan 2:** Pengenalan dan Desain Framework Flutter memberikan pemahaman fundamental mengenai perancangan antarmuka aplikasi bergerak berbasis pohon widget (*Everything is a Widget*). Praktikan mempelajari perbedaan esensial antara `StatelessWidget` yang bersifat statis dan `StatefulWidget` yang mendukung pembaruan status internal secara dinamis. Selain itu, penguasaan komponen tata letak dasar seperti `Column` untuk pengaturan posisi vertikal serta `ListView` untuk penyajian data kolektif dalam format kartu (*Card*) menjadi fondasi penting dalam membangun antarmuka aplikasi mobile yang modular, responsif, dan mudah dipelihara.
+
+## Pertemuan 3
+<img width="1600" height="757" alt="image" src="https://github.com/user-attachments/assets/8b316c2a-4567-456b-a042-106d6e015ba2" />
+<img width="1600" height="761" alt="image" src="https://github.com/user-attachments/assets/36ec1485-094e-4990-85c9-f65dd36d4e09" />
+![Uploading image.png…]()
+
+
+
