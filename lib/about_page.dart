@@ -17,3 +17,4 @@ class AboutPage extends StatelessWidget {
     );
   }
 }
+
