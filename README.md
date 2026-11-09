@@ -27,9 +27,13 @@ Pertemuan ini berfokus pada persiapan lingkungan pengembangan (*environment setu
 **Kesimpulan Pertemuan 2:** Pengenalan dan Desain Framework Flutter memberikan pemahaman fundamental mengenai perancangan antarmuka aplikasi bergerak berbasis pohon widget (*Everything is a Widget*). Praktikan mempelajari perbedaan esensial antara `StatelessWidget` yang bersifat statis dan `StatefulWidget` yang mendukung pembaruan status internal secara dinamis. Selain itu, penguasaan komponen tata letak dasar seperti `Column` untuk pengaturan posisi vertikal serta `ListView` untuk penyajian data kolektif dalam format kartu (*Card*) menjadi fondasi penting dalam membangun antarmuka aplikasi mobile yang modular, responsif, dan mudah dipelihara.
 
 ## Pertemuan 3
-<img width="1600" height="757" alt="image" src="https://github.com/user-attachments/assets/8b316c2a-4567-456b-a042-106d6e015ba2" />
-<img width="1600" height="761" alt="image" src="https://github.com/user-attachments/assets/36ec1485-094e-4990-85c9-f65dd36d4e09" />
-![Uploading image.png…]()
 
+| Home Page | Sidemenu |
+| :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/8b316c2a-4567-456b-a042-106d6e015ba2" width="400" /> | <img src="https://github.com/user-attachments/assets/36ec1485-094e-4990-85c9-f65dd36d4e09" width="400" /> |
 
+**Penjelasan:**
+1. **Home Page:** Menampilkan halaman beranda utama pengguna yang telah berhasil masuk (*login*), di mana data sesi nama pengguna (*username*) diambil kembali dari penyimpanan lokal (*local storage*) melalui fungsi asinkron `_loadUsername()` menggunakan package `shared_preferences` dan ditampilkan di tengah layar (`"Ini adalah halaman User $namauser"`). Halaman ini juga mengintegrasikan ikon menu navigasi samping pada `AppBar` melalui properti `drawer`.
+2. **Sidemenu (Navigation Drawer):** Mengimplementasikan komponen navigasi geser samping `Drawer` pada `sidemenu.dart` yang memuat `DrawerHeader` serta item menu navigasi menggunakan `ListTile` berikon (`Icons.home` untuk Home dan `Icons.info` untuk About). Menu ini menerapkan mekanisme *routing* (`Navigator.push` dan `MaterialPageRoute`) yang memungkinkan transisi perpindahan antar halaman (*Home Page* dan *About Page*) secara terstruktur dan intuitif.
 
+**Kesimpulan Pertemuan 3:** Praktikum Modul 3 mengenai Routes, Side Menu, Login, dan Local Storage memberikan pemahaman komprehensif mengenai pengelolaan alur navigasi multi-halaman dan manajemen sesi data pengguna pada framework Flutter. Praktikan berhasil menerapkan sistem autentikasi sederhana serta memanfaatkan package `shared_preferences` untuk menyimpan dan membaca data sesi secara asinkronus ke penyimpanan lokal (*local storage*). Selain itu, penerapan navigasi *routing* berbasis `MaterialPageRoute` yang dipadukan dengan komponen antarmuka `Drawer` (*Sidemenu*) menjadi fondasi esensial dalam membangun arsitektur aplikasi mobile yang memiliki hierarki navigasi rapi, terorganisir, dan berorientasi pada kenyamanan pengguna (*user-friendly*).
