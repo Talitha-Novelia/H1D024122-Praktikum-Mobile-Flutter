@@ -30,6 +30,7 @@ Pertemuan ini berfokus pada persiapan lingkungan pengembangan (*environment setu
 
 | Home Page | Sidemenu |
 | :---: | :---: |
+<img width="1600" height="761" alt="image" src="https://github.com/user-attachments/assets/3c300175-7164-40f5-aec3-df17facb4b90" />
 | <img src="https://github.com/user-attachments/assets/8b316c2a-4567-456b-a042-106d6e015ba2" width="400" /> | <img src="https://github.com/user-attachments/assets/36ec1485-094e-4990-85c9-f65dd36d4e09" width="400" /> |
 
 **Penjelasan:**
