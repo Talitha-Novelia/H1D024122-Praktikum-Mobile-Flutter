@@ -12,11 +12,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // ignore: prefer_typing_uninitialized_variables
-  var namauser;
+  var namauser = 'admin';
 
   void _loadUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    namauser = prefs.getString('username');
+    namauser = prefs.getString('username') ?? 'admin';
     setState(() {});
   }
 
