@@ -46,6 +46,16 @@ class _ProdukDetailState extends State<ProdukDetail> {
       children: [
         // Tombol Edit
         OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.black,
+            side: BorderSide.none,
+            minimumSize: const Size(88, 36),
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
           child: const Text("EDIT"),
           onPressed: () {
             Navigator.push(
@@ -58,8 +68,19 @@ class _ProdukDetailState extends State<ProdukDetail> {
             );
           },
         ),
+        const SizedBox(width: 2),
         // Tombol Hapus
         OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.black,
+            side: BorderSide.none,
+            minimumSize: const Size(88, 36),
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
           child: const Text("DELETE"),
           onPressed: () => confirmHapus(),
         ),

@@ -38,6 +38,17 @@ void main() {
     expect(find.text('Nama : Kamera'), findsOneWidget);
     expect(find.text('Harga : Rp. 5000000'), findsOneWidget);
 
+    final OutlinedButton editButton = tester.widget(
+      find.widgetWithText(OutlinedButton, 'EDIT'),
+    );
+    final OutlinedButton deleteButton = tester.widget(
+      find.widgetWithText(OutlinedButton, 'DELETE'),
+    );
+    expect(editButton.style?.backgroundColor?.resolve({}), Colors.green);
+    expect(editButton.style?.foregroundColor?.resolve({}), Colors.black);
+    expect(deleteButton.style?.backgroundColor?.resolve({}), Colors.red);
+    expect(deleteButton.style?.foregroundColor?.resolve({}), Colors.black);
+
     await tester.tap(find.widgetWithText(OutlinedButton, 'EDIT'));
     await tester.pumpAndSettle();
 
