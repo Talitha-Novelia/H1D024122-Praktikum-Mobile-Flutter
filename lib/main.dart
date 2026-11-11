@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:belajarflutter/home_page.dart';
+import 'package:belajarflutter/ui/registrasi_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +11,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Menu',
+      title: 'Toko Kita',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: false,
         primarySwatch: Colors.blue,
@@ -19,8 +20,15 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFFE0E0E0),
+            foregroundColor: Colors.black,
+            elevation: 2,
+          ),
+        ),
       ),
-      home: const HomePage(),
+      home: const RegistrasiPage(),
     );
   }
 }
