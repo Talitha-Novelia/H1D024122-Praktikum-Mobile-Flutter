@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:belajarflutter/ui/registrasi_page.dart';
+import 'package:belajarflutter/ui/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const RegistrasiPage(),
+      home: const LoginPage(),
     );
   }
 }
