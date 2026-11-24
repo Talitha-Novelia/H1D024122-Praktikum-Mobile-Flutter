@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:belajarflutter/bloc/produk_bloc.dart';
 import 'package:belajarflutter/model/produk.dart';
 import 'package:belajarflutter/ui/produk_form.dart';
+import 'package:belajarflutter/ui/produk_page.dart';
+import 'package:belajarflutter/widget/warning_dialog.dart';
 
 class ProdukDetail extends StatefulWidget {
   final Produk? produk;
 
-  const ProdukDetail({super.key, this.produk});
+  ProdukDetail({Key? key, this.produk}) : super(key: key);
 
   @override
-  State<ProdukDetail> createState() => _ProdukDetailState();
+  _ProdukDetailState createState() => _ProdukDetailState();
 }
 
 class _ProdukDetailState extends State<ProdukDetail> {
@@ -33,7 +36,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
               "Harga : Rp. ${widget.produk!.hargaProduk.toString()}",
               style: const TextStyle(fontSize: 18.0),
             ),
-            _tombolHapusEdit(),
+            _tombolHapusEdit()
           ],
         ),
       ),
@@ -44,46 +47,20 @@ class _ProdukDetailState extends State<ProdukDetail> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Tombol Edit
+        //Tombol Edit
         OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.black,
-            side: BorderSide.none,
-            minimumSize: const Size(88, 36),
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-          child: const Text("EDIT"),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProdukForm(
-                  produk: widget.produk!,
-                ),
-              ),
-            );
-          },
-        ),
-        const SizedBox(width: 2),
-        // Tombol Hapus
+            child: const Text("EDIT"),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProdukForm(
+                            produk: widget.produk!,
+                          )));
+            }),
+        //Tombol Hapus
         OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.black,
-            side: BorderSide.none,
-            minimumSize: const Size(88, 36),
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-          child: const Text("DELETE"),
-          onPressed: () => confirmHapus(),
-        ),
+            child: const Text("DELETE"), onPressed: () => confirmHapus()),
       ],
     );
   }
@@ -92,16 +69,28 @@ class _ProdukDetailState extends State<ProdukDetail> {
     AlertDialog alertDialog = AlertDialog(
       content: const Text("Yakin ingin menghapus data ini?"),
       actions: [
-        // tombol hapus
+        //tombol hapus
         OutlinedButton(
           child: const Text("Ya"),
-          onPressed: () {},
+          onPressed: () {
+            ProdukBloc.deleteProduk(id: widget.produk!.id).then((value) {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const ProdukPage()),
+                  (route) => false);
+            }, onError: (error) {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => const WarningDialog(
+                        description: "Hapus data gagal, silahkan coba lagi",
+                      ));
+            });
+          },
         ),
-        // tombol batal
+        //tombol batal
         OutlinedButton(
           child: const Text("Batal"),
           onPressed: () => Navigator.pop(context),
-        ),
+        )
       ],
     );
 

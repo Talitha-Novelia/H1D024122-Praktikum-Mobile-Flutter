@@ -143,3 +143,42 @@ Praktikum Modul 3 mengenai Routes, Side Menu, Login, dan Local Storage memberika
 
 **Kesimpulan Pertemuan 4:**
 Praktikum Modul 4 mengenai Operasi CRUD dengan API CodeIgniter 4 Bagian 1 berhasil mengintegrasikan pemodelan data berorientasi objek di sisi Flutter dengan perancangan antarmuka CRUD yang lengkap, aman, dan modular. Penerapan validasi form client-side memastikan integritas data masukan sebelum diproses lebih lanjut, sedangkan rancangan halaman katalog (`ProdukPage`), form multifungsi (`ProdukForm`), dan rincian produk (`ProdukDetail`) menghadirkan alur kerja manajemen data yang intuitif bagi pengguna. Selain itu, perancangan RESTful API backend berbasis CodeIgniter 4 dan MySQL menjadi fondasi krusial dalam menghubungkan antarmuka mobile dengan basis data terpusat, memastikan seluruh siklus Create, Read, Update, dan Delete data dapat berjalan secara konsisten, aman, dan terstandarisasi.
+
+---
+
+## Pertemuan 5
+
+| Registrasi Berhasil (Success Dialog) |
+| :---: |
+| <img src="assets/pertemuan5/registrasi_sukses.png" width="300" /> |
+
+**Materi:** Operasi CRUD dengan API CodeIgniter 4 (Bagian 2: Helper, BLoC, Widget Dialog, dan Integrasi Registrasi API ke Flutter)
+
+**Penjelasan Teknis:**
+1. **Konfigurasi Dependensi & Arsitektur Lapisan Helper:**
+   - Menambahkan dependensi paket `http` untuk protokol pengiriman request RESTful API dan `shared_preferences` untuk persistensi sesi lokal di `pubspec.yaml`.
+   - Mengimplementasikan modul `user_info.dart` untuk mengelola penyimpanan token autentikasi (`setToken`, `getToken`) dan `userID` secara persisten, serta fungsi `logout()` menggunakan `pref.clear()`.
+   - Merancang kelas penanganan error khusus pada `app_exception.dart` (`FetchDataException`, `BadRequestException`, `UnauthorisedException`, `InvalidInputException`) untuk menangani kegagalan jaringan atau kode status HTTP tertentu.
+   - Membangun wrapper HTTP terpusat pada `api.dart` yang otomatis menyematkan header `Authorization: Bearer <token>` dan mem-parsing kode status respons server (200, 400, 401, 403, 422, 500).
+   - Mengatur sentralisasi URL endpoint pada `api_url.dart` yang adaptif lintas platform (menggunakan `http://10.0.2.2/toko-api/public` untuk Android Emulator dan `http://localhost/toko-api/public` untuk pengujian desktop/web).
+2. **Pola Desain Business Logic Component (BLoC):**
+   - Menerapkan pemisahan tugas (*separation of concerns*) antara logika komunikasi data dengan antarmuka visual melalui `RegistrasiBloc` pada `registrasi_bloc.dart`.
+   - Method `RegistrasiBloc.registrasi` menerima masukan parameter identitas (`nama: "Talitha"`, `email: "talithanoveliasalsabila@gmail.com"`, `password: "123456"`), membungkusnya ke dalam format JSON, mengeksekusi request `POST` via kelas `Api`, dan mengonversi respons balikan ke dalam model data `Registrasi`.
+3. **Komponen Reusable Dialog & Integrasi Antarmuka:**
+   - Merancang komponen dialog visual kustom `SuccessDialog` pada `success_dialog.dart` yang memiliki tampilan kartu melengkung (*rounded rectangle*), judul **SUKSES** berwarna hijau, deskripsi pesan informatif, serta tombol aksi **OK** yang mengeksekusi penutupan dialog dan fungsi callback navigasi.
+   - Menautkan proses validasi formulir pada `registrasi_page.dart` ke fungsi `_submit()` yang memanggil `RegistrasiBloc.registrasi()`, memicu kemunculan `SuccessDialog` saat pendaftaran berhasil (*"Registrasi berhasil, silahkan login"*), serta mengarahkan pengguna kembali ke halaman `LoginPage`.
+4. **Sinkronisasi Backend RESTful API & Basis Data:**
+   - Memproses data pendaftaran akun pada endpoint backend `POST /registrasi` melalui kontroler `RegistrasiController` di CodeIgniter 4.
+   - Mengamankan kata sandi pengguna menggunakan fungsi hashing satu arah `password_hash()` dan menyimpan entri data akun baru ke tabel `member` pada basis data MySQL `toko_api`.
+
+**Penjelasan Non-Teknis:**
+1. **Kejelasan Umpan Balik Pengguna (Feedback & User Usability):**
+   - Kehadiran dialog konfirmasi pop-up yang informatif dan tegas memberikan kepastian psikologis langsung kepada pengguna bahwa proses registrasi akun telah berhasil dilakukan, sehingga pengguna tidak perlu menebak status pendaftarannya.
+2. **Keamanan & Perlindungan Privasi Data:**
+   - Penggunaan enkripsi pada kata sandi di sisi basis data server menjamin kerahasiaan akun pengguna (`talithanoveliasalsabila@gmail.com`) agar tidak tersimpan dalam bentuk teks biasa (*plain text*), menjaga standar keamanan aplikasi yang baik.
+3. **Modularitas & Kemudahan Pemeliharaan Sistem:**
+   - Pembagian kode program menjadi lapisan Helper, BLoC, Model, dan UI membuat alur kerja sistem menjadi sangat teratur, memudahkan pelacakan jika terjadi kendala teknis, serta meningkatkan efisiensi kerja tim pengembang dalam memperbarui fitur aplikasi di masa mendatang.
+
+**Kesimpulan Pertemuan 5:**
+Praktikum Pertemuan 5 berhasil mengimplementasikan integrasi nyata antara aplikasi antarmuka Flutter dengan backend RESTful API CodeIgniter 4 dan basis data MySQL. Penerapan pola arsitektur Helper dan BLoC menciptakan pemisahan tanggung jawab (*separation of concerns*) yang jelas, di mana antarmuka pengguna tetap fokus pada interaksi visual sementara komunikasi jaringan dan logika data ditangani secara terisolasi. Melalui implementasi form registrasi dengan identitas pengguna `Talitha` (`talithanoveliasalsabila@gmail.com`), sistem sukses mengirimkan payload ke endpoint backend, mengenkripsi kredensial, dan menampilkan dialog konfirmasi keberhasilan (*SuccessDialog*), meletakkan fondasi autentikasi yang solid sebelum melangkah ke operasi CRUD produk selanjutnya.
+
