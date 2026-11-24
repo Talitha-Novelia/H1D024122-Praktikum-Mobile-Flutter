@@ -1,9 +1,14 @@
+# Laporan Praktikum Pemrograman Mobile (Flutter)
+
 **Nama:** Talitha Novelia Salsabila  
 **NIM:** H1D024122  
 **Shift:** C  
 
+---
+
 ## Pertemuan 1
 
+**Hari, Tanggal:** Rabu, 21 Oktober 2026  
 **Materi:** Instalasi Lingkungan Flutter & Dasar Bahasa Pemrograman Dart
 
 **Penjelasan Teknis:**
@@ -31,6 +36,8 @@ Konfigurasi lingkungan pengembangan yang tepat serta pemahaman menyeluruh terhad
 ---
 
 ## Pertemuan 2
+
+**Hari, Tanggal:** Rabu, 28 Oktober 2026  
 
 | Hello World | Widget Column | List Data Produk |
 | :---: | :---: | :---: |
@@ -64,6 +71,8 @@ Pengenalan dan Desain Framework Flutter memberikan pemahaman fundamental mengena
 ---
 
 ## Pertemuan 3
+
+**Hari, Tanggal:** Rabu, 4 November 2026  
 
 | Login Page | Home Page | Sidemenu |
 | :---: | :---: | :---: |
@@ -99,6 +108,8 @@ Praktikum Modul 3 mengenai Routes, Side Menu, Login, dan Local Storage memberika
 ---
 
 ## Pertemuan 4
+
+**Hari, Tanggal:** Rabu, 11 November 2026  
 
 | Form Registrasi (Validasi) | Form Login | List Produk |
 | :---: | :---: | :---: |
@@ -148,43 +159,53 @@ Praktikum Modul 4 mengenai Operasi CRUD dengan API CodeIgniter 4 Bagian 1 berhas
 
 ## Pertemuan 5
 
-| Registrasi Berhasil (Success Dialog) | Login Gagal (Warning Dialog) | List Data Produk (REST API) |
+**Hari, Tanggal:** Rabu, 18 November 2026 *(Pelaksanaan/Asistensi Pekan 17–18 November 2026)*  
+
+### 1. Dokumentasi Alur Autentikasi & Modal Dialog
+| Registrasi Berhasil (Success Dialog) | Login Gagal (Warning Dialog) |
+| :---: | :---: |
+| <img src="assets/pertemuan5/registrasi_sukses.png" width="340" /> | <img src="assets/pertemuan5/login_gagal.png" width="340" /> |
+
+### 2. Dokumentasi Backend RESTful API & Katalog Produk
+| Endpoint JSON API (`/produk`) | List Produk (Pengujian Awal) | List Produk (Referensi Modul 5) |
 | :---: | :---: | :---: |
-| <img src="assets/pertemuan5/registrasi_sukses.png" width="280" /> | <img src="assets/pertemuan5/login_gagal.png" width="280" /> | <img src="assets/pertemuan5/list_produk.png" width="280" /> |
+| <img src="assets/pertemuan5/api_produk_json.png" width="280" /> | <img src="assets/pertemuan5/list_produk_awal.png" width="280" /> | <img src="assets/pertemuan5/list_produk.png" width="280" /> |
 
 **Materi:** Operasi CRUD dengan API CodeIgniter 4 (Bagian 2: Helper, BLoC, Widget Dialog, dan Integrasi Full-Stack REST API ke Flutter)
 
 **Penjelasan Teknis:**
 1. **Konfigurasi Dependensi & Arsitektur Lapisan Helper:**
-   - Menambahkan dependensi paket `http` untuk protokol pengiriman request RESTful API dan `shared_preferences` untuk persistensi sesi lokal di `pubspec.yaml`.
-   - Mengimplementasikan modul `user_info.dart` untuk mengelola penyimpanan token autentikasi (`setToken`, `getToken`) dan `userID` secara persisten, serta fungsi `logout()` menggunakan `pref.clear()`.
-   - Merancang kelas penanganan error khusus pada `app_exception.dart` (`FetchDataException`, `BadRequestException`, `UnauthorisedException`, `InvalidInputException`) untuk menangani kegagalan jaringan atau kode status HTTP tertentu.
-   - Membangun wrapper HTTP terpusat pada `api.dart` yang otomatis menyematkan header `Authorization: Bearer <token>` dan mem-parsing kode status respons server (200, 400, 401, 403, 422, 500).
-   - Mengatur sentralisasi URL endpoint pada `api_url.dart` yang adaptif lintas platform (menggunakan `http://10.0.2.2/toko-api/public` untuk Android Emulator dan `http://localhost/toko-api/public` untuk pengujian desktop/web).
+   - Menambahkan dependensi paket `http` untuk protokol komunikasi jaringan RESTful API dan `shared_preferences` untuk persistensi sesi lokal di file `pubspec.yaml`.
+   - Mengimplementasikan modul `user_info.dart` untuk mengelola penyimpanan token otentikasi (`setToken`, `getToken`) dan identitas unik `userID` secara persisten pada penyimpanan lokal perangkat (*local storage*), serta menyediakan fungsi `logout()` menggunakan `pref.clear()`.
+   - Merancang kelas penanganan pengecualian khusus pada `app_exception.dart` (`FetchDataException`, `BadRequestException`, `UnauthorisedException`, `InvalidInputException`) yang memetakan status kesalahan jaringan dan kode status HTTP ke pesan error yang informatif.
+   - Membangun wrapper HTTP terpusat pada `api.dart` yang otomatis menyematkan header `Authorization: Bearer <token>` dan mengevaluasi respon HTTP server (kode 200, 400, 401, 403, 422, 500).
+   - Mengatur sentralisasi URL endpoint pada `api_url.dart` yang adaptif lintas platform: menggunakan alamat `http://10.0.2.2/toko-api/public` untuk Android Emulator dan `http://localhost/toko-api/public` untuk pengujian platform desktop/web browser.
 2. **Pola Desain Business Logic Component (BLoC):**
-   - Menerapkan pemisahan tugas (*separation of concerns*) antara logika komunikasi data dengan antarmuka visual melalui `RegistrasiBloc` pada `registrasi_bloc.dart`, `LoginBloc` pada `login_bloc.dart`, dan `ProdukBloc` pada `produk_bloc.dart`.
-   - `RegistrasiBloc.registrasi` menerima masukan parameter identitas (`nama: "Talitha"`, `email: "talithanoveliasalsabila@gmail.com"`, `password: "123456"`), membungkusnya ke dalam format JSON, mengeksekusi request `POST` via kelas `Api`, dan mengonversi respons balikan ke dalam model data `Registrasi`.
-   - `LoginBloc.login` mengirimkan kredensial email dan password pengguna ke endpoint `POST /login` untuk memvalidasi otentikasi serta menerima respon token sesi unik.
-   - `ProdukBloc.getProduks` mengirimkan request `GET /produk` ke server backend untuk mengambil seluruh koleksi produk aktif dan memetakan setiap objek JSON ke dalam daftar koleksi model `List<Produk>`.
-3. **Komponen Reusable Dialog & Penyajian Data Dinamis:**
-   - **SuccessDialog (`success_dialog.dart`):** Komponen dialog visual kustom bertema hijau dengan judul **SUKSES**, pesan *"Registrasi berhasil, silahkan login"*, dan tombol **OK** yang menutup dialog dan mengarahkan pengguna ke halaman login.
-   - **WarningDialog (`warning_dialog.dart`):** Komponen dialog peringatan bertema merah dengan judul **GAGAL**, yang dipicu saat terjadi kegagalan otentikasi (*"Login gagal, silahkan coba lagi"*) ketika pengguna memasukkan kombinasi email/password yang salah atau saat terjadi kendala koneksi server.
-   - **List Produk Dinamis (`produk_page.dart`):** Menggunakan widget `FutureBuilder<List<Produk>>` yang memantau alur asinkronus `ProdukBloc.getProduks()`. Jika request berhasil, data katalog produk dari basis data MySQL (seperti `Kulkas Polytron Rp 2.000.000` dan `AC Panasonic Rp 3.000.000`) langsung dirender secara dinamis menggunakan `ListView.builder` dan komponen `Card`/`ListTile` dengan kemampuan gulir yang mulus dan responsif.
+   - Menerapkan pemisahan tugas (*separation of concerns*) yang memisahkan logika komunikasi data dengan antarmuka visual melalui `RegistrasiBloc` (`registrasi_bloc.dart`), `LoginBloc` (`login_bloc.dart`), `ProdukBloc` (`produk_bloc.dart`), dan `LogoutBloc` (`logout_bloc.dart`).
+   - `RegistrasiBloc.registrasi` menerima input form registrasi (`nama: "Talitha"`, `email: "talithanoveliasalsabila@gmail.com"`, dan `password`), membungkusnya ke dalam format JSON, mengeksekusi request `POST` via wrapper `Api`, dan mengonversi respons balikan ke dalam model data `Registrasi`.
+   - `LoginBloc.login` mengirimkan kredensial email dan password pengguna ke endpoint `POST /login` untuk memvalidasi otentikasi serta menerima respon token sesi unik dari server backend.
+   - `ProdukBloc.getProduks` mengirimkan request `GET /produk` ke server backend untuk mengambil seluruh koleksi produk aktif dan memetakan setiap objek JSON ke dalam koleksi model `List<Produk>`.
+   - `LogoutBloc.logout` mengosongkan sesi pengguna melalui pemanggilan `UserInfo().logout()` saat tombol logout pada drawer ditekan.
+3. **Komponen Reusable Dialog & Penyajian Data Visual (Screenshot):**
+   - **SuccessDialog (`success_dialog.dart`):** Komponen dialog pop-up kustom bertema hijau dengan judul **SUKSES**, pesan *"Registrasi berhasil, silahkan login"*, dan tombol **OK** yang menutup dialog dan mengarahkan pengguna ke halaman login setelah registrasi dengan identitas akun `Talitha` (`talithanoveliasalsabila@gmail.com`) berhasil diproses (*tampilan bersih dan rapi tanpa status bar sistem operasi*).
+   - **WarningDialog (`warning_dialog.dart`):** Komponen dialog peringatan bertema merah dengan judul **GAGAL**, yang dipicu saat terjadi kegagalan otentikasi (*"Login gagal, silahkan coba lagi"*) ketika pengguna memasukkan kombinasi email/password yang tidak valid atau saat server menolak otentikasi.
+   - **Endpoint JSON API (`/produk`):** Hasil pengujian verifikasi rute RESTful API CodeIgniter 4 langsung melalui peramban web pada URL `localhost/toko-api/public/produk`, membuktikan bahwa server lokal berjalan aktif dan mengembalikan format respon JSON standar `{"code": 200, "status": true, "data": []}`.
+   - **List Produk Pengujian Awal (`produk_page.dart`):** Tampilan halaman katalog produk pada tahap awal pengujian integrasi database lokal yang memuat item uji (*Kamera* Rp 5.000.000, *Kulkas* Rp 2.500.000, *Mesin Cuci* Rp 2.000.000) yang dirender secara dinamis melalui widget `FutureBuilder<List<Produk>>`, `ListView.builder`, dan `Card`/`ListTile`.
+   - **List Produk Referensi Modul 5 (`produk_page.dart`):** Tampilan katalog produk yang telah diselaraskan dengan data panduan modul 5 (*Kulkas Polytron* Rp 2.000.000 dan *AC Panasonic* Rp 3.000.000), dilengkapi laci navigasi (*drawer*) dengan tombol Logout untuk memutus sesi pengguna.
 4. **Sinkronisasi Backend RESTful API & Basis Data MySQL:**
    - Memproses pendaftaran akun pada endpoint `POST /registrasi` di `RegistrasiController` dengan pengamanan kata sandi berbasis `password_hash()`.
    - Memvalidasi kredensial login pada endpoint `POST /login` di `LoginController` dan menerbitkan token otorisasi ke tabel `member_token`.
-   - Menyediakan data produk katalog pada endpoint `GET /produk` di `ProdukController` yang langsung terhubung ke tabel `produk` pada basis data MySQL `toko_api`.
+   - Menyediakan data produk katalog pada endpoint `GET /produk` di `ProdukController` yang langsung terhubung ke tabel `produk` pada basis data MySQL `toko_api` dengan struktur respon JSON standar: `{"code": 200, "status": true, "data": [...]}`.
 
 **Penjelasan Non-Teknis:**
 1. **Kejelasan Umpan Balik Pengguna (Feedback & User Usability):**
-   - Penggunaan modal dialog pop-up yang kontras (hijau untuk SUKSES dan merah untuk GAGAL) memberikan kepastian visual seketika kepada pengguna mengenai status aksi yang mereka lakukan, baik saat berhasil mendaftarkan akun maupun saat mengalami kesalahan saat login.
+   - Penggunaan modal dialog pop-up yang kontras (warna hijau untuk SUKSES dan warna merah untuk GAGAL) memberikan kepastian visual seketika kepada pengguna mengenai hasil aksi yang dilakukan, baik saat berhasil mendaftarkan akun maupun saat mengalami kesalahan autentikasi.
 2. **Transparansi Katalog & Pengalaman Pengguna (User Experience):**
-   - Tampilan daftar produk yang terorganisir rapi dalam bentuk kartu (*Card*) memudahkan pengguna dalam menelusuri katalog barang dagangan secara intuitif, dengan nama produk yang jelas dan informasi harga yang terstruktur.
-3. **Keamanan & Perlindungan Privasi Data:**
-   - Penyamaran karakter input kata sandi (`obscureText: true`) pada form serta penerapan enkripsi satu arah (*one-way hashing*) pada kata sandi di server menjamin kerahasiaan akun pengguna (`talithanoveliasalsabila@gmail.com`) tetap terlindungi.
+   - Tampilan daftar produk yang terorganisir rapi dalam format kartu (*Card*) memudahkan pengguna dalam menelusuri katalog barang dagangan secara intuitif, dengan nama produk yang jelas dan informasi harga yang terstruktur.
+3. **Keamanan & Perlindungan Privasi Data Pengguna:**
+   - Penyamaran karakter input kata sandi (`obscureText: true`) pada form serta penerapan enkripsi satu arah (*one-way hashing*) pada server menjamin kerahasiaan data akun pengguna (`talithanoveliasalsabila@gmail.com`) tetap terlindungi dari penyalahgunaan.
 4. **Modularitas & Kemudahan Pemeliharaan Sistem:**
    - Pembagian kode program menjadi lapisan Helper, BLoC, Model, dan UI membuat alur kerja sistem menjadi sangat teratur, memudahkan pelacakan jika terjadi kendala teknis, serta meningkatkan efisiensi kerja tim pengembang dalam memperbarui fitur aplikasi di masa mendatang.
 
 **Kesimpulan Pertemuan 5:**
-Praktikum Pertemuan 5 berhasil mengimplementasikan integrasi nyata secara menyeluruh (full-stack) antara aplikasi antarmuka Flutter dengan backend RESTful API CodeIgniter 4 dan basis data MySQL. Penerapan pola arsitektur Helper dan BLoC menciptakan pemisahan tanggung jawab (*separation of concerns*) yang jelas, di mana antarmuka pengguna tetap fokus pada interaksi visual sementara komunikasi jaringan dan logika data ditangani secara terisolasi. Melalui implementasi form registrasi dan login dengan identitas akun `Talitha` (`talithanoveliasalsabila@gmail.com`), sistem sukses menangani berbagai skenario alur data: mulai dari registrasi akun baru dengan umpan balik `SuccessDialog`, penanganan proteksi kesalahan autentikasi dengan `WarningDialog`, hingga penarikan dan penyajian data katalog produk (`ProdukPage`) secara dinamis langsung dari basis data server, mewujudkan arsitektur aplikasi mobile modern yang tangguh, aman, dan responsif.
-
+Praktikum Pertemuan 5 berhasil mengimplementasikan integrasi nyata secara menyeluruh (full-stack) antara aplikasi antarmuka Flutter dengan backend RESTful API CodeIgniter 4 dan basis data MySQL. Penerapan pola arsitektur Helper dan BLoC menciptakan pemisahan tanggung jawab (*separation of concerns*) yang jelas, di mana antarmuka pengguna tetap fokus pada interaksi visual sementara komunikasi jaringan dan logika data ditangani secara terisolasi. Melalui implementasi form registrasi dan login dengan identitas akun `Talitha` (`talithanoveliasalsabila@gmail.com`), sistem sukses menangani berbagai skenario alur data: mulai dari registrasi akun baru dengan umpan balik `SuccessDialog` tanpa gangguan tampilan status bar, penanganan proteksi kesalahan autentikasi dengan `WarningDialog`, pengujian endpoint RESTful API via web, hingga penarikan dan penyajian data katalog produk (`ProdukPage`) secara dinamis langsung dari basis data server, mewujudkan arsitektur aplikasi mobile modern yang tangguh, aman, dan responsif.
